@@ -1,27 +1,27 @@
 {
-  "name": "gpxdf",
-  "version": "0.0.4",
-  "description": "This tool helps you to find and remove duplicates from a gpx file.",
-  "main": "index.js",
-  "bin": "bin/gpxdf",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prepublishOnly": "git add * && git commit -m \"update: new npm version\" && npm version patch",
-    "publish": "git push && git push --tags"
-  },
-  "author": "Jonas Schmitt",
-  "license": "ISC",
-  "files": [
-    "bin/*",
-    "src/*",
-    "index.js"
-  ],
-  "keywords": [
-    "gpx",
-    "duplicates",
-    "gpxdf"
-  ],
-  "dependencies": {
-    "xml2js": "^0.4.22"
-  }
+    "name": "gpxdf",
+    "version": "0.0.4",
+    "description": "This tool helps you to find and remove duplicates from a gpx file.",
+    "main": "index.js",
+    "bin": "bin/gpxdf",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "prepublishOnly": "git add . && git commit -m \"update: new npm version\" && npm version patch",
+        "publish": "git push && git push --tags"
+    },
+    "author": "Jonas Schmitt",
+    "license": "ISC",
+    "files": [
+        "bin/*",
+        "src/*",
+        "index.js"
+    ],
+    "keywords": [
+        "gpx",
+        "duplicates",
+        "gpxdf"
+    ],
+    "dependencies": {
+        "xml2js": "^0.4.22"
+    }
 }
