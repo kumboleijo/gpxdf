@@ -13,7 +13,7 @@ const builder = new xml2js.Builder();
 
 const cwd = process.cwd();
 
-async function gpxdf(input, output) {
+async function gpxdf(input, output, count) {
     xa.info('input:  ' + input);
     let _inputPath = path.isAbsolute(input) ? input : `${cwd}/${input}`;
     let _outputPath = path.isAbsolute(output) ? output : `${cwd}/${output}`;
@@ -23,14 +23,17 @@ async function gpxdf(input, output) {
 
     let trkpts = parsedFile.gpx.trk[0].trkseg[0].trkpt;
     let trkptsLength = trkpts.length;
+
     let uniqueTrkpts = getUnique(trkpts, 'time');
     let uniqueTrkptsLength = uniqueTrkpts.length;
+
     let duplicatesCounter = trkptsLength - uniqueTrkptsLength;
     let duplicatesCounterString = `there are ${duplicatesCounter} duplicates`;
     if (duplicatesCounter == 0) {
         xa.info('there are no duplicates');
         process.exit(1);
     }
+
     xa.info(duplicatesCounterString);
 
     let reducedFile = parsedFile;
@@ -40,6 +43,8 @@ async function gpxdf(input, output) {
     xa.info('output:  ' + output);
     await writeFile(_outputPath, xml);
     xa.success('file saved');
+
+    if (count) xa.info(`there are ${uniqueTrkptsLength} unique waypoints out of ${trkptsLength} total waypoints remaining`);
 }
 
 function getUnique(arr, comp) {

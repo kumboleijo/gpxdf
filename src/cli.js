@@ -8,11 +8,12 @@ function cli(argv) {
         .version(pjson.version)
         .description(pjson.description)
         .option('-i ,--input <file>', 'specify the input file')
-        .option('-o, --output <file>', 'specifiy the output file', 'reduced.gpx');
+        .option('-o, --output <file>', 'specifiy the output file', 'reduced.gpx')
+        .option('-c, --count', 'show count stats', false);
 
     program.parse(argv);
 
-    gpxdf(program.input, program.output);
+    gpxdf(program.input, program.output, program.count);
 }
 
 module.exports = cli;
