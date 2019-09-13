@@ -17,7 +17,6 @@ async function gpxdf(input, output) {
     xa.info('input:  ' + input);
     let _inputPath = path.isAbsolute(input) ? input : `${cwd}/${input}`;
     let _outputPath = path.isAbsolute(output) ? output : `${cwd}/${output}`;
-
     let gpxFile = await readFile(_inputPath);
     let parsedFile = await parseString(gpxFile);
     xa.success('parse input file');
@@ -28,7 +27,10 @@ async function gpxdf(input, output) {
     let uniqueTrkptsLength = uniqueTrkpts.length;
     let duplicatesCounter = trkptsLength - uniqueTrkptsLength;
     let duplicatesCounterString = `there are ${duplicatesCounter} duplicates`;
-    if (duplicatesCounter == 0) process.exit(1);
+    if (duplicatesCounter == 0) {
+        xa.info('there are no duplicates');
+        process.exit(1);
+    }
     xa.info(duplicatesCounterString);
 
     let reducedFile = parsedFile;
@@ -37,7 +39,7 @@ async function gpxdf(input, output) {
 
     xa.info('output:  ' + output);
     await writeFile(_outputPath, xml);
-    xa.success('save file');
+    xa.success('file saved');
 }
 
 function getUnique(arr, comp) {
