@@ -5,7 +5,9 @@
   "main": "index.js",
   "bin": "bin/gpxdf",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublishOnly": "git add * && git commit -m \"update: new npm version\" && npm version patch",
+    "publish": "git push && git push --tags"
   },
   "author": "Jonas Schmitt",
   "license": "ISC",

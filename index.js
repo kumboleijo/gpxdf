@@ -1,3 +1,3 @@
-const gpxdf = require('./src/main')
+const gpxdf = require("./src/main");
 
-module.exports = gpxdf
+module.exports = gpxdf;
