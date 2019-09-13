@@ -5,6 +5,7 @@ const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 
 const xml2js = require('xml2js');
+const xa = require('xa');
 
 const parser = new xml2js.Parser();
 const parseString = util.promisify(parser.parseString);
@@ -12,22 +13,31 @@ const builder = new xml2js.Builder();
 
 const cwd = process.cwd();
 
-async function gpxdf(options) {
-    let _path = path.isAbsolute(options) ? options : `${cwd}/${options}`;
-    let gpxFile = await readFile(_path);
+async function gpxdf(input, output) {
+    xa.info('input:  ' + input);
+    let _inputPath = path.isAbsolute(input) ? input : `${cwd}/${input}`;
+    let _outputPath = path.isAbsolute(output) ? output : `${cwd}/${output}`;
+
+    let gpxFile = await readFile(_inputPath);
     let parsedFile = await parseString(gpxFile);
+    xa.success('parse input file');
+
     let trkpts = parsedFile.gpx.trk[0].trkseg[0].trkpt;
     let trkptsLength = trkpts.length;
-    var uniqueTrkpts = getUnique(trkpts, 'time');
-    var uniqueTrkptsLength = uniqueTrkpts.length;
-    var duplicatesCounter = trkptsLength - uniqueTrkptsLength;
-    var reducedFile = parsedFile;
-    reducedFile.gpx.trk[0].trkseg[0].trkpt = uniqueTrkpts;
-    var xml = builder.buildObject(reducedFile);
-    let reducedFileName = `${_path}.reduced.gpx`;
-    await writeFile(reducedFileName, xml);
+    let uniqueTrkpts = getUnique(trkpts, 'time');
+    let uniqueTrkptsLength = uniqueTrkpts.length;
+    let duplicatesCounter = trkptsLength - uniqueTrkptsLength;
+    let duplicatesCounterString = `there are ${duplicatesCounter} duplicates`;
+    if (duplicatesCounter == 0) process.exit(1);
+    xa.info(duplicatesCounterString);
 
-    return { duplicatesCounter, reducedFileName };
+    let reducedFile = parsedFile;
+    reducedFile.gpx.trk[0].trkseg[0].trkpt = uniqueTrkpts;
+    let xml = builder.buildObject(reducedFile);
+
+    xa.info('output:  ' + output);
+    await writeFile(_outputPath, xml);
+    xa.success('save file');
 }
 
 function getUnique(arr, comp) {

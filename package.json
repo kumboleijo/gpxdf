@@ -22,6 +22,8 @@
         "gpxdf"
     ],
     "dependencies": {
+        "commander": "^3.0.1",
+        "xa": "^2.3.0",
         "xml2js": "^0.4.22"
     }
 }
