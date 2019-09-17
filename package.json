@@ -1,6 +1,6 @@
 {
     "name": "gpxdf",
-    "version": "0.0.8",
+    "version": "0.0.9",
     "description": "This tool helps you to find and remove duplicates from a gpx file.",
     "main": "index.js",
     "bin": "bin/gpxdf",
