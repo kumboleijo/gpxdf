@@ -31,7 +31,7 @@ async function gpxdf(input, output, count) {
     let duplicatesCounterString = `there are ${duplicatesCounter} duplicates`;
     if (duplicatesCounter == 0) {
         xa.info('there are no duplicates');
-        process.exit(1);
+        // process.exit(1);
     }
 
     xa.info(duplicatesCounterString);
